@@ -1,7 +1,12 @@
-import React from 'react'
-import { addSetupToStorage } from '../../hooks/useStorageManager'
+import React, { useState, useRef } from 'react'
 
-function SetupForm({ title, subtitle, children, onNext, prevDisabled, onPrev }) {
+import { addSetupToStorage } from '../../managers/useStorageManager'
+import { validateName } from '../../managers/useValidationManager'
+
+function SetupForm({ title, subtitle, children, onNext, prevDisabled, onPrev, submitLabel = 'Next' }) {
+
+    const [errors, setErrors] = useState({});
+    const firstErrorRef = useRef(null);
 
     if (!title) {
         console.error("please, enter the title for your form")
@@ -12,7 +17,25 @@ function SetupForm({ title, subtitle, children, onNext, prevDisabled, onPrev }) 
         e.preventDefault();
         const formData = new FormData(e.target);
 
-        for (const [name, value] of formData.entries()) {
+        const entries = Array.from(formData.entries());
+        const newErrors = {};
+
+        for (const [name, value] of entries) {
+            if (/^player/i.test(name)) {
+                const err = validateName(value);
+                if (err) newErrors[name] = err;
+            }
+        }
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            firstErrorRef.current = Object.keys(newErrors)[0];
+            return;
+        }
+
+        setErrors({});
+
+        for (const [name, value] of entries) {
             addSetupToStorage(name, value);
         }
 
@@ -31,12 +54,20 @@ function SetupForm({ title, subtitle, children, onNext, prevDisabled, onPrev }) 
             </div>
 
             <div className="setup-form__body">
+                {Object.keys(errors).length > 0 && (
+                    <div className="setup-form__errors">
+                        {Object.entries(errors).map(([k, msg]) => (
+                            <div key={k} className="setup-form__error">{msg}</div>
+                        ))}
+                    </div>
+                )}
+
                 {children}
             </div>
 
             <div>
                 <button type='button' disabled={prevDisabled} onClick={onPrev}>prev</button>
-                <button type="submit">Next</button>
+                <button type="submit">{submitLabel}</button>
             </div>
         </form>
     )

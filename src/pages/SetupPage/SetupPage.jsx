@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router'
 
 import Header from '../../components/Header/Header'
 import Footer from '../../components/Footer/Footer'
 import SetupForm from '../../components/SetupForm/SetupForm'
 import SetupOption from '../../components/OptionButton/SetupOption'
 
-import { newStorage } from '../../hooks/useStorageManager'
+import { newStorage } from '../../managers/useStorageManager'
+import { initializeGame } from '../../managers/useGameManager'
 
 function SetupPage() {
     const [setupStep, setSetupStep] = useState(0)
+    const navigate = useNavigate()
+    const { startIfReady } = initializeGame(navigate)
 
     useEffect(() => {
         newStorage();
@@ -26,29 +30,31 @@ function SetupPage() {
                         prevDisabled={true}
                         onPrev={() => setSetupStep(0)}
                     >
-                        <SetupOption val={501} name="startPoints" label={501} />
+                        <SetupOption val={501} name="startPoints" label={501} def />
                         <SetupOption val={301} name="startPoints" label={301} />
                     </SetupForm>
                 }
                 {setupStep === 1 &&
                     <SetupForm
-                        title="Frames"
-                        subtitle="Select the amount of frames you want to play"
+                        title="Legs"
+                        subtitle="Select the amount of legs you want to play"
                         onNext={() => setSetupStep(2)}
                         onPrev={() => setSetupStep(0)}
                     >
-                        <SetupOption val={1} name="frames" label={1} />
-                        <SetupOption val={3} name="frames" label={3} />
-                        <SetupOption val={5} name="frames" label={5} />
-                        <SetupOption val={7} name="frames" label={7} />
+                        <SetupOption val={1} name="legs" label={'1 leg'} />
+                        <SetupOption val={3} name="legs" label={'3 legs'} def />
+                        <SetupOption val={5} name="legs" label={'5 legs'} />
+                        <SetupOption val={7} name="legs" label={'7 legs'} />
+                        <SetupOption val={'custom'} name="legs" label={'Custom'} hasTextField />
                     </SetupForm>
                 }
                 {setupStep === 2 &&
                     <SetupForm
                         title="Names"
                         subtitle="Enter your player names"
-                        onNext={() => console.log('time to start')}
+                        onNext={() => startIfReady()}
                         onPrev={() => setSetupStep(1)}
+                        submitLabel={'Start Game'}
                     >
                         <input type='text' name='player1' placeholder='player1' />
                         <input type='text' name='player2' placeholder='player2' />

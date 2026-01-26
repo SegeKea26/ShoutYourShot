@@ -6,13 +6,13 @@ import Footer from '../../components/Footer/Footer'
 import SetupForm from '../../components/SetupForm/SetupForm'
 import SetupOption from '../../components/OptionButton/SetupOption'
 
-import { newStorage } from '../../managers/useStorageManager'
-import { initializeGame } from '../../managers/useGameManager'
+import { newStorage } from '../../hooks/storage/useStorageManager'
+import * as GameManager from '../../hooks/game/useGameManager'
 
 function SetupPage() {
     const [setupStep, setSetupStep] = useState(0)
     const navigate = useNavigate()
-    const { startIfReady } = initializeGame(navigate)
+    const { startIfReady } = GameManager.initializeGame(navigate)
 
     useEffect(() => {
         newStorage();

@@ -1,20 +1,20 @@
 import React, { useState } from 'react'
-import { getSetupFromStorage } from '../../managers/useStorageManager';
+import { useGame } from '../../hooks/useGameContext'
 
-function previouslyChecked(name, val, def = false) {
-    const setup = getSetupFromStorage();
+function previouslyChecked(name, val, def = false, getSetup) {
+    const setup = getSetup()
 
-    if (!setup || !(name in setup)) return def;
+    if (!setup || !(name in setup)) return def
 
-    return String(setup[name]) === String(val);
+    return String(setup[name]) === String(val)
 }
 
 function SetupOption({ label, name, val, def = false, hasTextField = false }) {
-    const setup = getSetupFromStorage();
+    const { getSetupFromStorage: getSetup } = useGame()
 
-    const initialVal = setup && (name in setup) ? String(setup[name]) : '1';
-    
-    const [currentVal, setCurrentVal] = useState(initialVal);
+    const setup = getSetup()
+    const initialVal = setup && (name in setup) ? String(setup[name]) : '1'
+    const [currentVal, setCurrentVal] = useState(initialVal)
 
     if (hasTextField) {
         return (
@@ -25,7 +25,7 @@ function SetupOption({ label, name, val, def = false, hasTextField = false }) {
                     type="radio"
                     name={name}
                     value={currentVal}
-                    defaultChecked={previouslyChecked(name, currentVal, def)}
+                    defaultChecked={previouslyChecked(name, currentVal, def, getSetup)}
                 />
                 <input
                     type="number"
@@ -46,7 +46,7 @@ function SetupOption({ label, name, val, def = false, hasTextField = false }) {
                 type="radio"
                 name={name}
                 value={val}
-                defaultChecked={previouslyChecked(name, val, def)}
+                defaultChecked={previouslyChecked(name, val, def, getSetup)}
             />
         </label>
     );

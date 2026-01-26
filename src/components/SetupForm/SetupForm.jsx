@@ -1,5 +1,5 @@
 import React from 'react'
-import useSetupForm from '../../hooks/useSetupForm'
+import useSetupForm from '../../hooks/setup/useSetupForm'
 
 function SetupForm({ title, subtitle, children, onNext, prevDisabled, onPrev, submitLabel = 'Next' }) {
     const { errors, handleSubmit } = useSetupForm({ onNext })

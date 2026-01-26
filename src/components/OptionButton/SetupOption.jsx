@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useGame } from '../../hooks/useGameContext'
+import { useGame } from '../../hooks/context/useGameContext'
 
 function previouslyChecked(name, val, def = false, getSetup) {
     const setup = getSetup()

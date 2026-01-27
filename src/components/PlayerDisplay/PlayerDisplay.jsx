@@ -9,21 +9,32 @@ function PlayerDisplayHeader({ player, gameStorage, index }) {
   )
 }
 
-function PlayerDisplayBody() {
+function PlayerDisplayBody({ achievements = [] }) {
   return (
     <div className="player-display__content">
-      {/* Additional player/throw details */}
+      {achievements && achievements.length > 0 && (
+        <div className="player-achievements">
+          {achievements.map(a => (
+            <div key={a.key} className="player-achievement">
+              <div className="achievement-name">{typeof a.name === 'string' ? a.name.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : a.name}</div>
+              {a.details && Object.keys(a.details).length > 0 && (
+                <div className="achievement-details">{Object.entries(a.details).filter(([k]) => k !== 'playerIndex').map(([k,v]) => `${k}: ${v}`).join(' • ')}</div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
 
-function PlayerDisplay({ player, gameStorage, index, active = false }) {
+function PlayerDisplay({ player, gameStorage, index, active = false, achievements = [] }) {
   const className = `player-display ${active ? 'player-display--active' : ''}`
 
   return (
     <article className={className}>
       <PlayerDisplayHeader player={player} gameStorage={gameStorage} index={index} active={active} />
-      <PlayerDisplayBody />
+      <PlayerDisplayBody achievements={achievements} />
     </article>
   )
 }

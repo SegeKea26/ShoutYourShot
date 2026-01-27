@@ -16,18 +16,33 @@ export function initializeGame(navigate) {
 export function _pushHistoryEntry(storage, entry) {
 	storage.game = storage.game || {}
 	storage.game.legs = storage.game.legs || []
-	const last = storage.game.legs[storage.game.legs.length - 1]
+	let last = storage.game.legs[storage.game.legs.length - 1]
 	if (!last) {
-		storage.game.legs.push({ legId: 1, players: storage.game.players || [], history: [] })
+		// delegate leg creation to startNextLeg to keep behavior consistent
+		try {
+			startNextLeg(storage)
+		} catch (e) {
+			storage.game.legs.push({ legId: 1, players: storage.game.players || [], history: [] })
+		}
+		last = storage.game.legs[storage.game.legs.length - 1]
 	}
-	storage.game.legs[storage.game.legs.length - 1].history.push(entry)
+	last.history.push(entry)
+
+	try {
+		evaluateAchievements(storage, entry)
+	} catch (e) {
+		// swallow evaluation errors to avoid breaking game flow
+		console.error('Achievement evaluation failed', e)
+	}
 }
 
 import { switchActivePlayer} from './switchActivePlayer'
 import { submitScore } from './submitScore'
 import { recordMiss } from './recordMiss'
 import { undoLastThrow } from './undoLastThrow'
+import { startNextLeg } from './startNextLeg'
+import evaluateAchievements from './evaluateAchievements'
 
-export { switchActivePlayer, submitScore, recordMiss, undoLastThrow }
+export { switchActivePlayer, submitScore, recordMiss, undoLastThrow, startNextLeg }
 
-export default { initializeGame, switchActivePlayer, submitScore, recordMiss, undoLastThrow }
+export default { initializeGame, switchActivePlayer, submitScore, recordMiss, undoLastThrow, startNextLeg }

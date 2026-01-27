@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 
 import { getRawStorage } from '../storage/useStorageManager'
-import { initializeGame, switchActivePlayer, submitScore, recordMiss, undoLastThrow } from './useGameManager'
+import { initializeGame, switchActivePlayer, submitScore, recordMiss, undoLastThrow, startNextLeg } from './useGameManager'
 import { validateGamePresence } from '../setup/useValidationManager'
 
 export function useGame() {
@@ -37,12 +37,29 @@ export function useGame() {
       setWinnerName(playerName)
       setWinnerModalVisible(true)
 
-      const completedCount = latestStorage.legs ? latestStorage.legs.filter(l => typeof l.winnerIndex === 'number').length : 0
+      const legs = latestStorage.legs || []
+      const completedCount = legs.filter(l => typeof l.winnerIndex === 'number').length
+
+      // count wins per player to determine if someone clinched majority
+      const wins = {}
+      for (const l of legs) {
+        if (typeof l.winnerIndex === 'number') {
+          wins[l.winnerIndex] = (wins[l.winnerIndex] || 0) + 1
+        }
+      }
+
+      const neededToWin = Math.ceil((latestStorage.totalLegs || 1) / 2)
 
       setTimeout(() => {
         setWinnerModalVisible(false)
-        if (completedCount >= latestStorage.totalLegs) {
+
+        // if any player has reached required wins, end match
+        const someoneClinched = Object.values(wins).some(w => w >= neededToWin)
+        if (someoneClinched || completedCount >= (latestStorage.totalLegs || 0)) {
           navigate('/stats')
+        } else {
+          startNextLeg()
+          setGameStorage(getRawStorage()?.game || {})
         }
       }, 3000)
 

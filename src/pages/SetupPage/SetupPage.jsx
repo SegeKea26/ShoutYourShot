@@ -41,19 +41,32 @@ function SetupPage() {
                         onNext={() => setSetupStep(2)}
                         onPrev={() => setSetupStep(0)}
                     >
-                        <SetupOption val={1} name="legs" label={'1 leg'} />
-                        <SetupOption val={3} name="legs" label={'3 legs'} def />
-                        <SetupOption val={5} name="legs" label={'5 legs'} />
-                        <SetupOption val={7} name="legs" label={'7 legs'} />
+                        <SetupOption val={1} name="legs" label={'Best of 1 leg'} />
+                        <SetupOption val={3} name="legs" label={'Best of 3 legs'} def />
+                        <SetupOption val={5} name="legs" label={'Best of 5 legs'} />
+                        <SetupOption val={7} name="legs" label={'Best of 7 legs'} />
                         <SetupOption val={'custom'} name="legs" label={'Custom'} hasTextField />
                     </SetupForm>
                 }
                 {setupStep === 2 &&
                     <SetupForm
+                        title="Outshot"
+                        subtitle="Select the outshot rule you want to use"
+                        onNext={() => setSetupStep(3)}
+                        onPrev={() => setSetupStep(1)}
+                    >
+                        <SetupOption val={'double'} name="outshot" label={'Double Out'} def />
+                        <SetupOption val={'triple'} name="outshot" label={'Triple Out'} />
+                        <SetupOption val={'single'} name="outshot" label={'Single Out'} />
+                    </SetupForm>
+                }
+
+                {setupStep === 3 &&
+                    <SetupForm
                         title="Names"
                         subtitle="Enter your player names"
                         onNext={() => startIfReady()}
-                        onPrev={() => setSetupStep(1)}
+                        onPrev={() => setSetupStep(2)}
                         submitLabel={'Start Game'}
                     >
                         <input type='text' name='player1' placeholder='player1' />

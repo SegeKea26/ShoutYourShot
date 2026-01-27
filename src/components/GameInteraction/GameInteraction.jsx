@@ -32,7 +32,6 @@ function GameInteraction({ onThrow = () => {}, onMiss = () => {}, onUndo = () =>
         <button type="button" onClick={toggleDouble} aria-pressed={selectedMultiplier === 2} disabled={isBullScore}>Double</button>
         <button type="button" onClick={toggleTriple} aria-pressed={selectedMultiplier === 3} disabled={isBullScore}>Triple</button>
         <button type="button" onClick={() => onUndo && onUndo()}>Undo</button>
-        <button type="button">Fouls</button>
         <button type="button" onClick={() => onMiss && onMiss()}>Miss</button>
       </div>
       <div className="game-interaction__content">

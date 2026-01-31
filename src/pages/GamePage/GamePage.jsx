@@ -1,5 +1,7 @@
+import { useEffect } from 'react'
 import { useGame } from '../../hooks/context/useGameContext'
 import { useVoiceMode } from '../../hooks/game/voice/useVoiceMode'
+import { useWakeLock } from '../../hooks/useWakeLock'
 import WinModal from '../../components/game/WinModal/WinModal'
 import Header from '../../components/general/Header/Header'
 import VoiceModeButton from '../../components/game/VoiceModeButton/VoiceModeButton'
@@ -13,6 +15,14 @@ function GamePage() {
         onMiss: handleMiss,
         onUndo: handleUndo
     })
+
+    // Keep screen awake while on game page
+    const { requestWakeLock, releaseWakeLock } = useWakeLock()
+
+    useEffect(() => {
+        requestWakeLock()
+        return () => releaseWakeLock()
+    }, [requestWakeLock, releaseWakeLock])
 
     return (
         <>

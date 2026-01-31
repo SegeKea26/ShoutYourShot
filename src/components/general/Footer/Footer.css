@@ -1,0 +1,15 @@
+.footer {
+    padding: var(--space-md) 0 0 0;
+
+    position: relative;
+
+    .footer__svg {
+        width: 100%;
+    }
+
+    .footer__text {
+        position: absolute;
+        bottom: var(--space-md);
+        right: 0;
+    }
+}

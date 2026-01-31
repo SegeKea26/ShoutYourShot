@@ -1,0 +1,31 @@
+.throw-history {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-xs);
+
+    min-height: 1.5rem;
+
+    overflow-x: auto;
+    max-width: 100%;
+
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.throw-history__item {
+    padding: 0.2rem 0.5rem;
+
+    background: var(--gray-dark);
+    border-radius: var(--brad-sm);
+
+    color: var(--white);
+    font-family: var(--ff-secondary);
+    font-size: var(--fs-small);
+    font-weight: 600;
+
+    white-space: nowrap;
+}

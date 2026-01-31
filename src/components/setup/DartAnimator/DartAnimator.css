@@ -1,0 +1,13 @@
+.dart-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+
+    .dart {
+        width: 3.5rem;
+        height: 3.5rem;
+
+        color: var(--yellow);
+    }
+}

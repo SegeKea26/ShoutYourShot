@@ -1,0 +1,26 @@
+.multiplier-button {
+    padding: var(--space-xs);
+
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+    .multiplier-button__label {
+        color: var(--gray);
+        font-family: var(--ff-primary);
+        font-size: var(--fs-label);
+
+        text-box: trim-both cap alphabetic;
+    }
+
+    &.multiplier-button--active {
+        .multiplier-button__label {
+            color: var(--yellow);
+        }
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}

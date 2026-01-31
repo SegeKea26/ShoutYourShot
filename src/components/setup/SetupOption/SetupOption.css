@@ -1,0 +1,103 @@
+.setup-option {
+    display: block;
+    width: 100%;
+    padding: var(--space-sm);
+    margin-top: var(--space-md);
+
+    position: relative;
+
+    border-radius: var(--brad-md);
+    border: 1px solid var(--white);
+
+    .setup-option__sublabel {
+        display: block;
+        margin-bottom: var(--space-xs);
+
+        text-align: center;
+        font-size: var(--fs-text);
+        text-box: trim-both cap alphabetic;
+    }
+
+    .setup-option__text {
+        color: var(--white);
+        text-align: center;
+        font-family: var(--ff-primary);
+        font-size: var(--fs-title);
+
+        text-box: trim-both cap alphabetic;
+    }
+
+    &.setup-option--has-number .setup-option__text {
+        font-size: var(--fs-text);
+        font-family: inherit;
+    }
+
+    .setup-option__radio {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+
+        opacity: 0;
+    }
+
+    &:has(.setup-option__radio:checked) {
+        border-color: var(--yellow);
+
+        .setup-option__sublabel {
+            color: var(--yellow);
+        }
+
+        .setup-option__text {
+            color: var(--yellow);
+        }
+
+        .setup-option__number {
+            color: var(--yellow);
+        }
+
+        .setup-option__number-label {
+            color: var(--yellow);
+        }
+    }
+
+    .setup-option__number-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: var(--space-xs);
+        margin-top: var(--space-xs);
+
+        position: relative;
+        z-index: 9999;
+    }
+
+    .setup-option__number {
+        width: 10%;
+        height: var(--fs-title);
+
+        color: var(--white);
+        text-align: right;
+        font-size: var(--fs-title);
+        font-family: var(--ff-primary);
+        text-box: trim-both cap alphabetic;
+
+        outline: none;
+        border: none;
+        background-color: transparent;
+    }
+
+    .setup-option__number-label {
+        color: var(--white);
+        font-size: var(--fs-title);
+        font-family: var(--ff-primary);
+        text-box: trim-both cap alphabetic;
+    }
+
+    &:has(.setup-option__number) {
+        .setup-option__text {
+            color: var(--grey);
+        }
+    }
+}

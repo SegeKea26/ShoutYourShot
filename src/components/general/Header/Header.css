@@ -1,0 +1,24 @@
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    padding: var(--space-md) 0;
+
+    .header__title {
+        color: var(--red);
+        font-size: var(--fs-big-title);
+        font-family: var(--ff-primary);
+        text-align: center;
+        font-weight: var(--fw-heading);
+        text-transform: uppercase;
+
+        text-box: trim-both cap alphabetic;
+    }
+
+    .header__right {
+        position: absolute;
+        right: 0;
+    }
+}

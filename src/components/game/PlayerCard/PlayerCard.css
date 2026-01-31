@@ -1,0 +1,83 @@
+.player-card {
+    padding: var(--space-sm);
+
+    border: 1px solid var(--gray);
+    border-radius: var(--brad-md);
+
+    min-width: 0;
+
+    &.player-card--active {
+        border-color: var(--yellow);
+
+        .player-card__name {
+            color: var(--yellow);
+        }
+
+        .player-card__points {
+            color: var(--yellow);
+        }
+    }
+}
+
+.player-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.player-card__name {
+    color: var(--white);
+    font-family: var(--ff-primary);
+    font-size: var(--fs-label);
+
+    text-box: trim-both cap alphabetic;
+}
+
+.player-card__legs {
+    color: var(--gray);
+    font-family: var(--ff-secondary);
+    font-size: var(--fs-small);
+}
+
+.player-card__body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+
+    margin-top: var(--space-xs);
+}
+
+.player-card__points {
+    color: var(--white);
+    font-family: var(--ff-primary);
+    font-size: var(--fs-title);
+
+    text-box: trim-both cap alphabetic;
+}
+
+.player-card__checkout {
+    min-height: var(--fs-small);
+}
+
+.player-card__achievements {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-xs);
+
+    min-height: 1.5rem;
+
+    overflow-x: auto;
+    max-width: 100%;
+
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.player-card__throw-history {
+    min-height: 1.5rem;
+}

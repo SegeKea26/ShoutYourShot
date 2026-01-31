@@ -1,78 +1,127 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 
-import Header from '../../components/Header/Header'
-import Footer from '../../components/Footer/Footer'
-import SetupForm from '../../components/SetupForm/SetupForm'
-import SetupOption from '../../components/OptionButton/SetupOption'
+import Header from '../../components/general/Header/Header'
+import Footer from '../../components/general/Footer/Footer'
+import SetupForm from '../../components/setup/SetupForm/SetupForm'
+import SetupOption from '../../components/setup/SetupOption/SetupOption'
 
 import { newStorage } from '../../hooks/storage/useStorageManager'
 import * as GameManager from '../../hooks/game/useGameManager'
 
+
+function StartingPointsStep() {
+    return (
+        <>
+            <SetupOption val={501} name="startPoints" label={501} def />
+            <SetupOption val={301} name="startPoints" label={301} />
+        </>
+    )
+}
+
+function LegsStep() {
+    return (
+        <>
+            <div className="setup-form__group">
+                <SetupOption val={1} name="legs" sublabel="Best of" label="1 leg" />
+                <SetupOption val={3} name="legs" sublabel="Best of" label="3 legs" def />
+            </div>
+            <div className="setup-form__group">
+                <SetupOption val={5} name="legs" sublabel="Best of" label="5 legs" />
+                <SetupOption val={7} name="legs" sublabel="Best of" label="7 legs" />
+            </div>
+            <SetupOption val="custom" name="legs" label="Custom" hasTextField />
+        </>
+    )
+}
+
+function OutshotStep() {
+    return (
+        <>
+            <SetupOption val="double" name="outshot" label="Double Out" def />
+            <SetupOption val="triple" name="outshot" label="Triple Out" />
+            <SetupOption val="single" name="outshot" label="Single Out" />
+        </>
+    )
+}
+
+function NamesStep() {
+    return (
+        <div className='setup-form__input-container'>
+            <input className='setup-form__input' type="text" name="player1" placeholder="Player 1 Name" />
+            <p className='setup-form__text'>VS</p>
+            <input className='setup-form__input' type="text" name="player2" placeholder="Player 2 Name" />
+        </div>
+    )
+}
+
+
+function useSetupSteps(onStartGame) {
+    const [currentStep, setCurrentStep] = useState(0)
+
+    const goTo = (step) => setCurrentStep(step)
+    const goNext = () => setCurrentStep(prev => prev + 1)
+    const goPrev = () => setCurrentStep(prev => prev - 1)
+
+    const steps = [
+        {
+            title: "Starting points",
+            subtitle: "Select the points you want to start with.",
+            onNext: goNext,
+            onPrev: () => { },
+            prevDisabled: true,
+            Component: StartingPointsStep
+        },
+        {
+            title: "Legs",
+            subtitle: "Select the best of legs you want to play.",
+            className: "setup-form--grouped",
+            onNext: goNext,
+            onPrev: goPrev,
+            Component: LegsStep
+        },
+        {
+            title: "Outshot",
+            subtitle: "Select the outshot rule you want to use.",
+            onNext: goNext,
+            onPrev: goPrev,
+            Component: OutshotStep
+        },
+        {
+            title: "Names",
+            subtitle: "Enter your player names",
+            onNext: onStartGame,
+            onPrev: goPrev,
+            submitLabel: "Start Game",
+            Component: NamesStep
+        }
+    ]
+
+    return { currentStep, steps }
+}
+
+
 function SetupPage() {
-    const [setupStep, setSetupStep] = useState(0)
     const navigate = useNavigate()
     const { startIfReady } = GameManager.initializeGame(navigate)
+    const { currentStep, steps } = useSetupSteps(startIfReady)
 
     useEffect(() => {
-        newStorage();
+        newStorage()
     }, [])
+
+    const step = steps[currentStep]
+    if (!step) return null
+
+    const { Component, ...formProps } = step
 
     return (
         <>
             <Header />
-            <main>
-                {setupStep === 0 &&
-                    <SetupForm
-                        title="Starting points"
-                        subtitle="Select the amount of points you want to begin with"
-                        onNext={() => setSetupStep(1)}
-                        prevDisabled={true}
-                        onPrev={() => setSetupStep(0)}
-                    >
-                        <SetupOption val={501} name="startPoints" label={501} def />
-                        <SetupOption val={301} name="startPoints" label={301} />
-                    </SetupForm>
-                }
-                {setupStep === 1 &&
-                    <SetupForm
-                        title="Legs"
-                        subtitle="Select the amount of legs you want to play"
-                        onNext={() => setSetupStep(2)}
-                        onPrev={() => setSetupStep(0)}
-                    >
-                        <SetupOption val={1} name="legs" label={'Best of 1 leg'} />
-                        <SetupOption val={3} name="legs" label={'Best of 3 legs'} def />
-                        <SetupOption val={5} name="legs" label={'Best of 5 legs'} />
-                        <SetupOption val={7} name="legs" label={'Best of 7 legs'} />
-                        <SetupOption val={'custom'} name="legs" label={'Custom'} hasTextField />
-                    </SetupForm>
-                }
-                {setupStep === 2 &&
-                    <SetupForm
-                        title="Outshot"
-                        subtitle="Select the outshot rule you want to use"
-                        onNext={() => setSetupStep(3)}
-                        onPrev={() => setSetupStep(1)}
-                    >
-                        <SetupOption val={'double'} name="outshot" label={'Double Out'} def />
-                        <SetupOption val={'triple'} name="outshot" label={'Triple Out'} />
-                        <SetupOption val={'single'} name="outshot" label={'Single Out'} />
-                    </SetupForm>
-                }
-
-                {setupStep === 3 &&
-                    <SetupForm
-                        title="Names"
-                        subtitle="Enter your player names"
-                        onNext={() => startIfReady()}
-                        onPrev={() => setSetupStep(2)}
-                        submitLabel={'Start Game'}
-                    >
-                        <input type='text' name='player1' placeholder='player1' />
-                        <input type='text' name='player2' placeholder='player2' />
-                    </SetupForm>
-                }
+            <main className="main">
+                <SetupForm {...formProps}>
+                    <Component />
+                </SetupForm>
             </main>
             <Footer />
         </>

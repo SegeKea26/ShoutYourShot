@@ -1,0 +1,75 @@
+.game-statistics {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.game-statistics__title {
+    color: var(--white);
+    font-family: var(--ff-primary);
+    font-size: var(--fs-label);
+
+    text-box: trim-both cap alphabetic;
+}
+
+.game-statistics__subtitle {
+    color: var(--gray);
+    font-family: var(--ff-primary);
+    font-size: var(--fs-text);
+
+    margin-top: var(--space-xs);
+
+    text-box: trim-both cap alphabetic;
+}
+
+.game-statistics__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-xs);
+}
+
+.game-statistics__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: var(--space-xs);
+
+    border: 1px solid var(--gray);
+    border-radius: var(--brad-sm);
+}
+
+.game-statistics__label {
+    color: var(--gray);
+    font-family: var(--ff-secondary);
+    font-size: var(--fs-small);
+}
+
+.game-statistics__value {
+    color: var(--white);
+    font-family: var(--ff-primary);
+    font-size: var(--fs-text);
+
+    text-box: trim-both cap alphabetic;
+}
+
+.game-statistics__achievements {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+
+    padding: var(--space-xs);
+
+    border: 1px solid var(--yellow);
+    border-radius: var(--brad-sm);
+
+    .game-statistics__value {
+        color: var(--yellow);
+    }
+}
+
+.game-statistics__players {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}

@@ -1,0 +1,54 @@
+.achievement-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    flex-shrink: 0;
+
+    padding: 0.25rem var(--space-xs);
+
+    background-color: var(--yellow);
+    border-radius: var(--brad-sm);
+
+    .achievement-badge__name {
+        color: var(--black);
+        font-family: var(--ff-secondary);
+        font-size: var(--fs-small);
+
+        white-space: nowrap;
+    }
+
+    .achievement-badge__details {
+        display: flex;
+        gap: var(--space-xs);
+    }
+
+    .achievement-badge__detail {
+        display: flex;
+        gap: 0.25rem;
+    }
+
+    .achievement-badge__detail-key {
+        color: var(--black);
+        font-family: var(--ff-secondary);
+        font-size: var(--fs-small);
+
+        opacity: 0.7;
+    }
+
+    .achievement-badge__detail-value {
+        color: var(--black);
+        font-family: var(--ff-secondary);
+        font-size: var(--fs-small);
+
+        font-weight: bold;
+    }
+
+    &.achievement-badge--player {
+        background-color: transparent;
+        border: 1px solid var(--yellow);
+
+        .achievement-badge__name {
+            color: var(--yellow);
+        }
+    }
+}

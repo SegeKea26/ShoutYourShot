@@ -1,0 +1,35 @@
+.frame-indicator {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.frame-indicator__label {
+    color: var(--gray);
+    font-family: var(--ff-secondary);
+    font-size: var(--fs-small);
+}
+
+.frame-indicator__current {
+    color: var(--yellow);
+    font-family: var(--ff-primary);
+    font-size: var(--fs-label);
+
+    text-box: trim-both cap alphabetic;
+}
+
+.frame-indicator__separator {
+    color: var(--gray);
+    font-family: var(--ff-primary);
+    font-size: var(--fs-label);
+
+    text-box: trim-both cap alphabetic;
+}
+
+.frame-indicator__total {
+    color: var(--white);
+    font-family: var(--ff-primary);
+    font-size: var(--fs-label);
+
+    text-box: trim-both cap alphabetic;
+}

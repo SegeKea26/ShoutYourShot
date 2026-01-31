@@ -1,0 +1,4 @@
+.achievement-list {
+    display: flex;
+    gap: var(--space-xs);
+}

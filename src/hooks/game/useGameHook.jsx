@@ -7,7 +7,19 @@ import { validateGamePresence } from '../setup/useValidationManager'
 
 export function useGame() {
   const [gameStorage, setGameStorage] = useState(() => getRawStorage()?.game || {})
-  const [throwCount, setThrowCount] = useState(0)
+  const [throwCount, setThrowCount] = useState(() => {
+    // Calculate initial throw count from history
+    const game = getRawStorage()?.game || {}
+    const legs = game.legs || []
+    const current = legs[legs.length - 1] || { history: [] }
+    const history = current.history || []
+    let cnt = 0
+    for (let i = history.length - 1; i >= 0; i--) {
+      if (history[i].playerIndex === game.activePlayerIndex) cnt++
+      else break
+    }
+    return cnt
+  })
   const [winnerModalVisible, setWinnerModalVisible] = useState(false)
   const [winnerName, setWinnerName] = useState('')
   const navigate = useNavigate()

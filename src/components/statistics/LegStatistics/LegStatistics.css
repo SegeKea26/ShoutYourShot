@@ -1,0 +1,101 @@
+.leg-statistics {
+    border: 1px solid var(--gray);
+    border-radius: var(--brad-md);
+
+    overflow: hidden;
+}
+
+.leg-statistics__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+
+    width: 100%;
+    padding: var(--space-sm);
+
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+    text-align: left;
+}
+
+.leg-statistics__title {
+    color: var(--white);
+    font-family: var(--ff-primary);
+    font-size: var(--fs-label);
+
+    text-box: trim-both cap alphabetic;
+}
+
+.leg-statistics__winner {
+    flex: 1;
+
+    color: var(--yellow);
+    font-family: var(--ff-secondary);
+    font-size: var(--fs-small);
+}
+
+.leg-statistics__toggle {
+    color: var(--gray);
+    font-family: var(--ff-primary);
+    font-size: var(--fs-label);
+
+    text-box: trim-both cap alphabetic;
+}
+
+.leg-statistics__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+
+    padding: var(--space-sm);
+    padding-top: 0;
+}
+
+.leg-statistics__stats {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.leg-statistics__stat {
+    display: flex;
+    gap: var(--space-xs);
+}
+
+.leg-statistics__label {
+    color: var(--gray);
+    font-family: var(--ff-secondary);
+    font-size: var(--fs-small);
+}
+
+.leg-statistics__value {
+    color: var(--white);
+    font-family: var(--ff-primary);
+    font-size: var(--fs-small);
+
+    text-box: trim-both alphabetic;
+}
+
+.leg-statistics__achievements {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+}
+
+.leg-statistics__achievement {
+    padding: 0.25rem var(--space-xs);
+
+    background-color: var(--yellow);
+    border-radius: var(--brad-sm);
+
+    color: var(--black);
+    font-family: var(--ff-secondary);
+    font-size: var(--fs-small);
+}
+
+.leg-statistics__players {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}

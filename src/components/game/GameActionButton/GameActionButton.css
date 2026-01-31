@@ -1,0 +1,43 @@
+.game-action-button {
+    padding: var(--space-xs);
+
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+    .game-action-button__label {
+        color: var(--gray);
+        font-family: var(--ff-primary);
+        font-size: var(--fs-label);
+
+        text-box: trim-both cap alphabetic;
+    }
+
+    &.game-action-button--throw {
+        padding: var(--space-xs) var(--space-md);
+
+        border: 1px solid var(--white);
+        border-radius: var(--brad-md);
+
+        .game-action-button__label {
+            color: var(--white);
+        }
+    }
+
+    &.game-action-button--undo {
+        .game-action-button__label {
+            color: var(--gray);
+        }
+    }
+
+    &.game-action-button--miss {
+        .game-action-button__label {
+            color: var(--red);
+        }
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}

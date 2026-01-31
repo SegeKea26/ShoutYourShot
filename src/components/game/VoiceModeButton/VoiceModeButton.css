@@ -1,0 +1,28 @@
+.voice-mode-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+
+    background-color: transparent;
+    border: 1px solid var(--gray);
+    border-radius: 50%;
+    cursor: pointer;
+
+    color: var(--gray);
+
+    transition: border-color 0.2s, color 0.2s;
+
+    &.voice-mode-button--active {
+        border-color: var(--yellow);
+        color: var(--yellow);
+    }
+}
+
+.voice-mode-button__icon {
+    width: 1.25rem;
+    height: 1.25rem;
+}

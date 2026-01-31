@@ -1,11 +1,12 @@
-import { useState, useRef } from 'react'
+import { useRef } from 'react'
 import { validateName } from './useValidationManager'
 import { useGame } from '../context/useGameContext'
+import { useToast } from '../context/useToastContext'
 
 export function useSetupForm({ onNext } = {}) {
-    const [errors, setErrors] = useState({})
     const firstErrorRef = useRef(null)
     const { addSetupToStorage } = useGame()
+    const { addToast } = useToast()
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -22,12 +23,12 @@ export function useSetupForm({ onNext } = {}) {
         }
 
         if (Object.keys(newErrors).length > 0) {
-            setErrors(newErrors)
+            Object.values(newErrors).forEach(msg => {
+                addToast(msg, 'error')
+            })
             firstErrorRef.current = Object.keys(newErrors)[0]
             return
         }
-
-        setErrors({})
 
         for (const [name, value] of entries) {
             addSetupToStorage(name, value)
@@ -36,7 +37,8 @@ export function useSetupForm({ onNext } = {}) {
         if (onNext) onNext()
     }
 
-    return { errors, firstErrorRef, handleSubmit, setErrors }
+    return { firstErrorRef, handleSubmit }
 }
 
 export default useSetupForm
+

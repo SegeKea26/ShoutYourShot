@@ -1,0 +1,97 @@
+.setup-form {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    height: 100%;
+
+    &.setup-form--grouped {
+
+        .setup-form__body {
+            .setup-form__content {
+                .setup-form__group {
+                    display: flex;
+                    gap: var(--space-md);
+                }
+            }
+        }
+    }
+
+    .setup-form__header {
+        .setup-form__title {
+            font-size: var(--fs-title);
+            margin-bottom: var(--space-sm);
+
+            text-box: trim-both cap alphabetic;
+        }
+
+        .setup-form__subtitle {
+            font-size: var(--fs-text);
+
+            text-box: trim-both cap alphabetic;
+        }
+    }
+
+    .setup-form__body {
+        .setup-form__input-container {
+            margin-top: var(--space-md);
+
+            .setup-form__input {
+                width: 100%;
+
+                padding: var(--space-xs);
+
+                background-color: transparent;
+                border: 1px solid var(--white);
+                border-radius: var(--brad-md);
+                outline: none;
+
+                color: var(--white);
+                font-family: var(--ff-primary);
+                font-size: var(--fs-label);
+                text-box: trim-both cap alphabetic;
+            }
+
+            .setup-form__text {
+                color: var(--red);
+                text-align: center;
+                font-family: var(--ff-primary);
+                font-size: var(--fs-title);
+                text-box: trim-both cap alphabetic;
+
+                margin: var(--space-sm) 0;
+            }
+        }
+    }
+
+    .setup-form__footer {
+        display: flex;
+        justify-content: space-between;
+        margin-top: var(--space-md);
+
+        .setup-form__button {
+            padding: var(--space-xs) var(--space-sm);
+
+            color: var(--green);
+            font-family: var(--ff-primary);
+            font-size: var(--fs-title);
+            text-box: trim-both cap alphabetic;
+
+            background-color: transparent;
+
+            border-radius: var(--brad-md);
+            border: 1px solid var(--green);
+
+            &:disabled {
+                opacity: 0.75;
+                cursor: not-allowed;
+
+                color: var(--gray);
+                border-color: var(--gray);
+            }
+
+            &[type='submit'] {
+                color: var(--yellow);
+                border-color: var(--yellow);
+            }
+        }
+    }
+}

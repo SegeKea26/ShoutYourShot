@@ -14,8 +14,10 @@ export function undoLastThrow() {
 		if (p && typeof entry.value === 'number') {
 			if (entry.result !== 'bust') p.points = (p.points || 0) + entry.value
 		}
+		// Switch active player to the player who made this throw
+		game.activePlayerIndex = entry.playerIndex
 	}
 
 	saveRawStorage(raw)
-	return { ok: true }
+	return { ok: true, playerIndex: entry?.playerIndex }
 }

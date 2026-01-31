@@ -1,0 +1,17 @@
+.checkout-recommender {
+    min-height: var(--fs-small);
+    text-align: center;
+}
+
+.checkout-recommender__text {
+    color: var(--yellow);
+    font-family: var(--ff-primary);
+    font-size: var(--fs-text);
+
+    text-box: trim-both cap alphabetic;
+}
+
+.checkout-recommender__placeholder {
+    visibility: hidden;
+    font-size: var(--fs-text);
+}

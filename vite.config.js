@@ -14,8 +14,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
       manifest: {
-        name: 'Shout Your Shot',
-        short_name: 'ShoutYourShot',
+        name: 'HitZone',
+        short_name: 'HitZone',
         description: 'Voice-controlled dart scoring app',
         theme_color: '#000000',
         background_color: '#000000',

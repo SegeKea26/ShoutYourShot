@@ -1,10 +1,11 @@
 import './StatisticsPage.css'
 
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router'
 
 import { validateGamePresence } from '../../hooks/setup/useValidationManager'
 import { useGame } from '../../hooks/context/useGameContext'
+import { usePdfExport } from '../../hooks/usePdfExport'
 
 import Header from '../../components/general/Header/Header'
 import Footer from '../../components/general/Footer/Footer'
@@ -14,6 +15,9 @@ import LegStatistics from '../../components/statistics/LegStatistics/LegStatisti
 function StatisticsPage() {
     const navigate = useNavigate()
     const { gameStorage } = useGame()
+    const contentRef = useRef(null)
+    const { exportToPdf, isExporting } = usePdfExport()
+    const [allLegsOpen, setAllLegsOpen] = useState(false)
 
     useEffect(() => {
         validateGamePresence(navigate)
@@ -36,10 +40,21 @@ function StatisticsPage() {
 
     const legs = (gameStorage && gameStorage.legs) || []
 
+    const handleDownloadPdf = async () => {
+        // First expand all legs for PDF capture
+        setAllLegsOpen(true)
+
+        // Wait for state to update and DOM to render
+        setTimeout(async () => {
+            await exportToPdf(contentRef.current)
+            setAllLegsOpen(false)
+        }, 100)
+    }
+
     return (
         <>
             <Header />
-            <main className="statistics-page">
+            <main className="statistics-page" ref={contentRef}>
                 <section className="statistics-page__header">
                     <h1 className="statistics-page__title">Statistics</h1>
                     <button
@@ -56,9 +71,19 @@ function StatisticsPage() {
                     <h2 className="statistics-page__section-title">Legs</h2>
                     <div className="statistics-page__legs-list">
                         {legs.map((_, i) => (
-                            <LegStatistics key={i} legIndex={i} />
+                            <LegStatistics key={i} legIndex={i} forceOpen={allLegsOpen} />
                         ))}
                     </div>
+                </section>
+
+                <section className="statistics-page__actions">
+                    <button
+                        className="statistics-page__download"
+                        onClick={handleDownloadPdf}
+                        disabled={isExporting}
+                    >
+                        {isExporting ? 'Generating...' : 'Download PDF'}
+                    </button>
                 </section>
             </main>
             <Footer />

@@ -11,8 +11,9 @@ function formatName(s) {
         : s
 }
 
-function LegStatistics({ legIndex = 0 }) {
+function LegStatistics({ legIndex = 0, forceOpen = false }) {
     const [isOpen, setIsOpen] = useState(false)
+    const showContent = forceOpen || isOpen
     const { gameStorage } = useGame()
     const leg = (gameStorage && gameStorage.legs && gameStorage.legs[legIndex]) || {}
     const stats = computeLegStatistics(leg, gameStorage)
@@ -41,7 +42,7 @@ function LegStatistics({ legIndex = 0 }) {
                 <span className="leg-statistics__toggle">{isOpen ? '−' : '+'}</span>
             </button>
 
-            {isOpen && (
+            {showContent && (
                 <div className="leg-statistics__content">
                     <div className="leg-statistics__stats">
                         <div className="leg-statistics__stat">

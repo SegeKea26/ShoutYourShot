@@ -57,3 +57,31 @@
     flex-direction: column;
     gap: var(--space-md);
 }
+
+.statistics-page__actions {
+    display: flex;
+    justify-content: center;
+    padding: var(--space-lg) 0;
+}
+
+.statistics-page__download {
+    padding: var(--space-sm) var(--space-lg);
+
+    background-color: var(--green);
+    border: none;
+    border-radius: var(--brad-md);
+    cursor: pointer;
+
+    color: var(--white);
+    font-family: var(--ff-primary);
+    font-size: var(--fs-label);
+
+    text-box: trim-both cap alphabetic;
+
+    transition: opacity 0.2s ease;
+}
+
+.statistics-page__download:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
